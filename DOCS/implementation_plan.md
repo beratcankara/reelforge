@@ -286,16 +286,43 @@ Phase 6: Deployment & Monitoring    [Week 5]      ░░░░░░░░░░
 - 3.2.3 Create n8n workflow node to fetch active accounts
 - 3.2.4 Test multi-account iteration logic
 
-#### 3.3 Human Approval Queue
-- 3.3.1 Create n8n sub-workflow: `add-to-approval-queue`
-- 3.3.2 Insert pending post into `approval_queue` table
-- 3.3.3 Upload video to temporary CDN or S3 for preview
-- 3.3.4 Implement notification system (option: Discord webhook)
-  - Send video preview link
-  - Include caption and hashtags
-  - Add approve/reject reaction buttons
-- 3.3.5 Create approval check workflow: `check-approval-status`
-- 3.3.6 Test approval flow with Discord bot integration
+#### 3.3 Custom Web Dashboard (Approval Interface)
+- 3.3.1 Set up Express.js backend server (port 3001)
+  - Install dependencies: express, cors, pg, helmet, winston
+  - Configure PostgreSQL connection pool
+  - Set up session-based authentication
+- 3.3.2 Create API endpoints:
+  - `POST /api/auth/login` - User authentication
+  - `GET /api/approvals` - List pending approvals
+  - `GET /api/approvals/:id` - Get single approval details
+  - `POST /api/approvals/:id/approve` - Approve video
+  - `POST /api/approvals/:id/reject` - Reject video
+  - `PUT /api/approvals/:id/edit` - Edit caption/hashtags
+  - `GET /api/accounts` - Manage Instagram accounts
+  - `GET /api/stats/overview` - Dashboard statistics
+  - `GET /api/videos/:id` - Stream video for preview
+- 3.3.3 Build React.js frontend:
+  - Create pages: Login, Dashboard, Approvals, Accounts, Statistics
+  - Components: ApprovalCard, VideoPreview, AccountList, StatsGrid
+  - State management: Zustand for auth/app state
+  - Styling: Tailwind CSS with custom dark theme
+- 3.3.4 Dashboard features:
+  - Video preview with HTML5 video player
+  - Approve/Reject buttons with confirmation
+  - Caption and hashtag editing
+  - Account management (add/remove/toggle)
+  - Real-time statistics overview
+  - Recent activity log
+- 3.3.5 Configure Nginx reverse proxy:
+  - Serve React build on `/`
+  - Proxy API requests to backend on `/api/`
+  - Enable HTTPS with SSL certificate
+  - Set up basic auth for n8n editor
+- 3.3.6 Deployment:
+  - Build React frontend (`npm run build`)
+  - Start backend with PM2
+  - Configure SSL with Let's Encrypt
+  - Test end-to-end approval flow
 
 #### 3.4 Instagram Posting Workflow
 - 3.4.1 Create n8n sub-workflow: `post-to-instagram`

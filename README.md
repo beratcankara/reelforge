@@ -219,9 +219,6 @@ Configure cron jobs:
 
 This project is licensed under the MIT License.
 
-## Authors
-
-- **Yusuf & Hazar** - Project owners
 
 ## Acknowledgments
 
